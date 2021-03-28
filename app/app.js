@@ -278,7 +278,7 @@ map.fire('click', { lngLat: ll, point:pointsel })
       map.on('click', 'dopa_geoserver_wdpa_master_202101', function (e) {
         new mapboxgl.Popup()
         .setLngLat(e.lngLat)
-        .setHTML('<a href="https://dopa.gis-ninja.eu/wdpa/'+e.features[0].properties.wdpaid+'">'+e.features[0].properties.name+'</a><hr><br><i>IUCN Category: <b>'+e.features[0].properties.iucn_cat+'</b></i><br><i>Reported Area: <b>'+e.features[0].properties.rep_area+'</b></i><br><i>Designation: <b>'+e.features[0].properties.desig_eng+'</b></i>')
+        .setHTML('<a href="https://dopa.gis-ninja.eu/wdpa/'+e.features[0].properties.wdpaid+' target="_blank" ">'+e.features[0].properties.name+'</a><hr><br><i>IUCN Category: <b>'+e.features[0].properties.iucn_cat+'</b></i><br><i>Reported Area: <b>'+e.features[0].properties.rep_area+'</b></i><br><i>Designation: <b>'+e.features[0].properties.desig_eng+'</b></i>')
         .addTo(map);
         });
          
