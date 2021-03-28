@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>Biodiversity Analysis Tool</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <!-- <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js'></script> -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
+  <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css' rel='stylesheet' />
+  <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/wnumb/1.0.4/wNumb.min.js'></script>
+
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/highcharts-more.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+  <!-- <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v2.0.2/turf.min.js'></script> -->
+  <script src='src/js/mapbox-gl-draw.js'></script>
+  <script src='src/js/busyLoad.js'></script>
+
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v0.18.0/mapbox-gl-draw.css' type='text/css'/>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
+  <!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" **defer**></script>
+
+  <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+<link rel='stylesheet' href='src/css/geocoder.css' type='text/css' />
+  <script src='src/js/mapbox-gl-draw-rectangle-mode.min.js'></script>
+
+  <link href="src/css/busyLoad.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="app/app.css" rel="stylesheet">
+</head>
+<body>
+
+
+
+  <div id="modal-carbon" class="modal">
+    <div class="modal-content">
+      <h4>Above and Below Ground Carbon Stock</h4>
+      <p>Above and Below Ground Carbon Stock map is computed by summing above-ground carbon (AGC), Belowground Biomass Carbon (BBCI) and Soil Organic Carbon. <br>
+        The Above-Ground Carbon (AGC) is expressed in Mg (megagrams or tonnes) of carbon per km<sup>2</sup>. It corresponds to the carbon fraction of 
+        the oven-dry weight of the woody parts (stem, bark, branches, and twigs) of all living trees, excluding stump and roots, 
+        as estimated by the GlobBiomass project (globbiomass.org) with 2010 as the reference year.
+        The Soil Organic Carbon is the amount of carbon stored in the soil (0 to 30 cm depth), expressed in Mg (megagrams or tonnes) per km<sup>2</sup>.
+        The Belowground Biomass Carbon (BBCI)is expressed in Mg (Megagrams or Tonnes) of carbon per km2. It represents an estimation of the carbon stored in
+        the roots of all living trees. This carbon pool is calculated as a fraction of the aboveground biomass carbon stock using root-to-shoot ratios (R). It is derived
+        from two main data sources: the global aboveground biomass map produced by the GlobBiomass project (globbiomass.org) and the 2019 Refinement to the 2006 IPCC Guidelines for National Greenhouse Gas Inventories (IPCC, 2019). 
+      </p>
+    </div>
+  </div>
+
+  <div id="modal-water" class="modal">
+    <div class="modal-content">
+      <h4>Above and Below Ground Carbon Stock</h4>
+      <p>Above and Below Ground Carbon Stock map is computed by summing above-ground carbon (AGC), Belowground Biomass Carbon (BBCI) and Soil Organic Carbon. <br>
+        The Above-Ground Carbon (AGC) is expressed in Mg (megagrams or tonnes) of carbon per km<sup>2</sup>. It corresponds to the carbon fraction of 
+        the oven-dry weight of the woody parts (stem, bark, branches, and twigs) of all living trees, excluding stump and roots, 
+        as estimated by the GlobBiomass project (globbiomass.org) with 2010 as the reference year.
+        The Soil Organic Carbon is the amount of carbon stored in the soil (0 to 30 cm depth), expressed in Mg (megagrams or tonnes) per km<sup>2</sup>.
+        The Belowground Biomass Carbon (BBCI)is expressed in Mg (Megagrams or Tonnes) of carbon per km2. It represents an estimation of the carbon stored in
+        the roots of all living trees. This carbon pool is calculated as a fraction of the aboveground biomass carbon stock using root-to-shoot ratios (R). It is derived
+        from two main data sources: the global aboveground biomass map produced by the GlobBiomass project (globbiomass.org) and the 2019 Refinement to the 2006 IPCC Guidelines for National Greenhouse Gas Inventories (IPCC, 2019). 
+      </p>
+    </div>
+  </div>
+
+  
+  <div id="modal-natural" class="modal">
+    <div class="modal-content">
+      <h4>Above and Below Ground Carbon Stock</h4>
+      <p>Above and Below Ground Carbon Stock map is computed by summing above-ground carbon (AGC), Belowground Biomass Carbon (BBCI) and Soil Organic Carbon. <br>
+        The Above-Ground Carbon (AGC) is expressed in Mg (megagrams or tonnes) of carbon per km<sup>2</sup>. It corresponds to the carbon fraction of 
+        the oven-dry weight of the woody parts (stem, bark, branches, and twigs) of all living trees, excluding stump and roots, 
+        as estimated by the GlobBiomass project (globbiomass.org) with 2010 as the reference year.
+        The Soil Organic Carbon is the amount of carbon stored in the soil (0 to 30 cm depth), expressed in Mg (megagrams or tonnes) per km<sup>2</sup>.
+        The Belowground Biomass Carbon (BBCI)is expressed in Mg (Megagrams or Tonnes) of carbon per km2. It represents an estimation of the carbon stored in
+        the roots of all living trees. This carbon pool is calculated as a fraction of the aboveground biomass carbon stock using root-to-shoot ratios (R). It is derived
+        from two main data sources: the global aboveground biomass map produced by the GlobBiomass project (globbiomass.org) and the 2019 Refinement to the 2006 IPCC Guidelines for National Greenhouse Gas Inventories (IPCC, 2019). 
+      </p>
+    </div>
+  </div>
+  <div id="modal-forest" class="modal">
+    <div class="modal-content">
+      <h4>Above and Below Ground Carbon Stock</h4>
+      <p>Above and Below Ground Carbon Stock map is computed by summing above-ground carbon (AGC), Belowground Biomass Carbon (BBCI) and Soil Organic Carbon. <br>
+        The Above-Ground Carbon (AGC) is expressed in Mg (megagrams or tonnes) of carbon per km<sup>2</sup>. It corresponds to the carbon fraction of 
+        the oven-dry weight of the woody parts (stem, bark, branches, and twigs) of all living trees, excluding stump and roots, 
+        as estimated by the GlobBiomass project (globbiomass.org) with 2010 as the reference year.
+        The Soil Organic Carbon is the amount of carbon stored in the soil (0 to 30 cm depth), expressed in Mg (megagrams or tonnes) per km<sup>2</sup>.
+        The Belowground Biomass Carbon (BBCI)is expressed in Mg (Megagrams or Tonnes) of carbon per km2. It represents an estimation of the carbon stored in
+        the roots of all living trees. This carbon pool is calculated as a fraction of the aboveground biomass carbon stock using root-to-shoot ratios (R). It is derived
+        from two main data sources: the global aboveground biomass map produced by the GlobBiomass project (globbiomass.org) and the 2019 Refinement to the 2006 IPCC Guidelines for National Greenhouse Gas Inventories (IPCC, 2019). 
+      </p>
+    </div>
+  </div>
+  <div id="modal-mammals" class="modal">
+    <div class="modal-content">
+      <h4>Above and Below Ground Carbon Stock</h4>
+      <p>Above and Below Ground Carbon Stock map is computed by summing above-ground carbon (AGC), Belowground Biomass Carbon (BBCI) and Soil Organic Carbon. <br>
+        The Above-Ground Carbon (AGC) is expressed in Mg (megagrams or tonnes) of carbon per km<sup>2</sup>. It corresponds to the carbon fraction of 
+        the oven-dry weight of the woody parts (stem, bark, branches, and twigs) of all living trees, excluding stump and roots, 
+        as estimated by the GlobBiomass project (globbiomass.org) with 2010 as the reference year.
+        The Soil Organic Carbon is the amount of carbon stored in the soil (0 to 30 cm depth), expressed in Mg (megagrams or tonnes) per km<sup>2</sup>.
+        The Belowground Biomass Carbon (BBCI)is expressed in Mg (Megagrams or Tonnes) of carbon per km2. It represents an estimation of the carbon stored in
+        the roots of all living trees. This carbon pool is calculated as a fraction of the aboveground biomass carbon stock using root-to-shoot ratios (R). It is derived
+        from two main data sources: the global aboveground biomass map produced by the GlobBiomass project (globbiomass.org) and the 2019 Refinement to the 2006 IPCC Guidelines for National Greenhouse Gas Inventories (IPCC, 2019). 
+      </p>
+    </div>
+  </div>
+  <div id="modal-th_mammals" class="modal">
+    <div class="modal-content">
+      <h4>Above and Below Ground Carbon Stock</h4>
+      <p>Above and Below Ground Carbon Stock map is computed by summing above-ground carbon (AGC), Belowground Biomass Carbon (BBCI) and Soil Organic Carbon. <br>
+        The Above-Ground Carbon (AGC) is expressed in Mg (megagrams or tonnes) of carbon per km<sup>2</sup>. It corresponds to the carbon fraction of 
+        the oven-dry weight of the woody parts (stem, bark, branches, and twigs) of all living trees, excluding stump and roots, 
+        as estimated by the GlobBiomass project (globbiomass.org) with 2010 as the reference year.
+        The Soil Organic Carbon is the amount of carbon stored in the soil (0 to 30 cm depth), expressed in Mg (megagrams or tonnes) per km<sup>2</sup>.
+        The Belowground Biomass Carbon (BBCI)is expressed in Mg (Megagrams or Tonnes) of carbon per km2. It represents an estimation of the carbon stored in
+        the roots of all living trees. This carbon pool is calculated as a fraction of the aboveground biomass carbon stock using root-to-shoot ratios (R). It is derived
+        from two main data sources: the global aboveground biomass map produced by the GlobBiomass project (globbiomass.org) and the 2019 Refinement to the 2006 IPCC Guidelines for National Greenhouse Gas Inventories (IPCC, 2019). 
+      </p>
+    </div>
+  </div>
+  <div id="modal-amphibians" class="modal">
+    <div class="modal-content">
+      <h4>Above and Below Ground Carbon Stock</h4>
+      <p>Above and Below Ground Carbon Stock map is computed by summing above-ground carbon (AGC), Belowground Biomass Carbon (BBCI) and Soil Organic Carbon. <br>
+        The Above-Ground Carbon (AGC) is expressed in Mg (megagrams or tonnes) of carbon per km<sup>2</sup>. It corresponds to the carbon fraction of 
+        the oven-dry weight of the woody parts (stem, bark, branches, and twigs) of all living trees, excluding stump and roots, 
+        as estimated by the GlobBiomass project (globbiomass.org) with 2010 as the reference year.
+        The Soil Organic Carbon is the amount of carbon stored in the soil (0 to 30 cm depth), expressed in Mg (megagrams or tonnes) per km<sup>2</sup>.
+        The Belowground Biomass Carbon (BBCI)is expressed in Mg (Megagrams or Tonnes) of carbon per km2. It represents an estimation of the carbon stored in
+        the roots of all living trees. This carbon pool is calculated as a fraction of the aboveground biomass carbon stock using root-to-shoot ratios (R). It is derived
+        from two main data sources: the global aboveground biomass map produced by the GlobBiomass project (globbiomass.org) and the 2019 Refinement to the 2006 IPCC Guidelines for National Greenhouse Gas Inventories (IPCC, 2019). 
+      </p>
+    </div>
+  </div>
+  <div id="modal-th_amphibians" class="modal">
+    <div class="modal-content">
+      <h4>Above and Below Ground Carbon Stock</h4>
+      <p>Above and Below Ground Carbon Stock map is computed by summing above-ground carbon (AGC), Belowground Biomass Carbon (BBCI) and Soil Organic Carbon. <br>
+        The Above-Ground Carbon (AGC) is expressed in Mg (megagrams or tonnes) of carbon per km<sup>2</sup>. It corresponds to the carbon fraction of 
+        the oven-dry weight of the woody parts (stem, bark, branches, and twigs) of all living trees, excluding stump and roots, 
+        as estimated by the GlobBiomass project (globbiomass.org) with 2010 as the reference year.
+        The Soil Organic Carbon is the amount of carbon stored in the soil (0 to 30 cm depth), expressed in Mg (megagrams or tonnes) per km<sup>2</sup>.
+        The Belowground Biomass Carbon (BBCI)is expressed in Mg (Megagrams or Tonnes) of carbon per km2. It represents an estimation of the carbon stored in
+        the roots of all living trees. This carbon pool is calculated as a fraction of the aboveground biomass carbon stock using root-to-shoot ratios (R). It is derived
+        from two main data sources: the global aboveground biomass map produced by the GlobBiomass project (globbiomass.org) and the 2019 Refinement to the 2006 IPCC Guidelines for National Greenhouse Gas Inventories (IPCC, 2019). 
+      </p>
+    </div>
+  </div>
+  <div id="modal-birds" class="modal">
+    <div class="modal-content">
+      <h4>Above and Below Ground Carbon Stock</h4>
+      <p>Above and Below Ground Carbon Stock map is computed by summing above-ground carbon (AGC), Belowground Biomass Carbon (BBCI) and Soil Organic Carbon. <br>
+        The Above-Ground Carbon (AGC) is expressed in Mg (megagrams or tonnes) of carbon per km<sup>2</sup>. It corresponds to the carbon fraction of 
+        the oven-dry weight of the woody parts (stem, bark, branches, and twigs) of all living trees, excluding stump and roots, 
+        as estimated by the GlobBiomass project (globbiomass.org) with 2010 as the reference year.
+        The Soil Organic Carbon is the amount of carbon stored in the soil (0 to 30 cm depth), expressed in Mg (megagrams or tonnes) per km<sup>2</sup>.
+        The Belowground Biomass Carbon (BBCI)is expressed in Mg (Megagrams or Tonnes) of carbon per km2. It represents an estimation of the carbon stored in
+        the roots of all living trees. This carbon pool is calculated as a fraction of the aboveground biomass carbon stock using root-to-shoot ratios (R). It is derived
+        from two main data sources: the global aboveground biomass map produced by the GlobBiomass project (globbiomass.org) and the 2019 Refinement to the 2006 IPCC Guidelines for National Greenhouse Gas Inventories (IPCC, 2019). 
+      </p>
+    </div>
+  </div>
+
+<div id='map' class='map'> </div>
+<div id='main_tools' class='main_tools'>
+  <div class="row">
+    <div class="col s12 m6 l3 icon_custom search_icon"><a class=" tooltipped" data-position="bottom" data-tooltip="Search for places"><span class="material-icons">search</span></div>
+  </div>
+</div>
+        
+
+  <div id='geocoder' class='geocoder'></div>
+  <div id='country_var_dropdown' >
+ 
+    <fieldset>
+      <select id='layer_country' name='layer_country'>
+      <option value='iso3'>Select a country variable</option>
+      <option value='adm0_code'>Total Carbon</option>
+      <option value='shape_leng'>Natural Areas</option>
+      <option value='adm0_code'>Water Presence</option>
+      <option value='shape_leng'>Intact Forest</option>
+      <option value='adm0_code'>Mammals Richness</option>
+      <option value='shape_leng'>Amphibians Richness</option>
+      <option value='shape_leng'>Birds Richness</option>
+      <option value='shape_leng'>Endemic Threatened Mammals Richness</option>
+      <option value='shape_leng'>Endemic Threatened Anphibians Richness</option>
+      <option value='iso3'>Overall Score</option>
+      </select>
+      </fieldset>
+  </div>
+
+  <div id='custom_map_tools'></div>
+
+
+
+
+  
+<!-- ------------------ main sidebar where country scores and tool are displayed ------------------------------ -->
+
+      
+  <div class='sidebar' data-html2canvas-ignore="true">
+      <div id='country_name'></div>
+      <div id = 'listing'>
+      <div id = 'listingname'>
+      </div>
+     </div>
+
+
+     <ul class="collapsible manual_scores">
+      <li>
+        <div class="collapsible-header scoring_section"><i class="material-icons">tune</i> Set your conservation priorities</div>
+        <div class="collapsible-body"><span>
+          <div class='top_dropdown'>
+            <div class='top_dropdown_inner'>
+            <div class='map-overlay-inner'>
+            <form action="#">
+              <div class="input-field col s12">
+                <a class='btn modal-trigger' href='#modal-carbon'><span class='material-icons'>info</span></a><span class="material-icons delvarico delvarico-carbon">clear</span> <label>Above and Below Ground Carbon</label><br>    
+                <p class="range-field range-field-carbon"><input type="range" id="carbon_slider" value ="1" min="1" max="10" /> <output id="carbon_value" name="carbon_value">1<span></span></output></p>
+              </div>
+            </form>
+            <form action="#">
+              <div class="input-field col s12">
+                <a class='btn modal-trigger' href='#modal-water'><span class='material-icons'>info</span></a><span class="material-icons delvarico delvarico-water">clear</span> <label>Water Presence</label><br>    
+                <p class="range-field range-field-water"><input type="range" id="water_slider" value ="1" min="1" max="10" /> <output id="water_value" name="water_value">1<span></span></output></p>
+              </div>
+            </form>
+            <form action="#">
+              <div class="input-field col s12">
+                <a class='btn modal-trigger' href='#modal-natural'><span class='material-icons'>info</span></a> <span class="material-icons delvarico delvarico-natural">clear</span> <label>Natural Areas Presence</label><br>    
+                <p class="range-field range-field-natural"><input type="range" id="natural_slider" value ="1" min="1" max="10" /> <output id="natural_value" name="natural_value">1<span></span></output></p>
+              </div>
+            </form>
+            <form action="#">
+              <div class="input-field col s12">
+                <a class='btn modal-trigger' href='#modal-forest'><span class='material-icons'>info</span></a> <span class="material-icons delvarico delvarico-forest">clear</span> <label>Intact Forest Presence</label><br>    
+                <p class="range-field range-field-forest"><input type="range" id="forest_slider" value ="1" min="1" max="10" /> <output id="forest_value" name="forest_value">1<span></span></output></p>
+              </div>
+            </form>
+            <form action="#">
+              <div class="input-field col s12">
+                <a class='btn modal-trigger' href='#modal-mammals'><span class='material-icons'>info</span></a><span class="material-icons delvarico delvarico-mammals">clear</span>  <label>Mammals Presence</label><br>    
+                <p class="range-field range-field-mammals"><input type="range" id="mammals_slider" value ="1" min="1" max="10" /> <output id="mammals_value" name="mammals_value">1<span></span></output></p>
+              </div>
+            </form>
+            <form action="#">
+              <div class="input-field col s12">
+                <a class='btn modal-trigger' href='#modal-th_mammals'><span class='material-icons'>info</span></a><span class="material-icons delvarico delvarico-th_mammals">clear</span> <label>Threatened Endemic Mammals Presence</label><br>    
+                <p class="range-field range-field-th_mammals"><input type="range" id="mammals_th_slider" value ="1" min="1" max="10" /> <output id="mammals_th_value" name="mammals_th_value">1<span></span></output></p>
+              </div>
+            </form>
+            <form action="#">
+              <div class="input-field col s12">
+                <a class='btn modal-trigger' href='#modal-amphibians'><span class='material-icons'>info</span></a><span class="material-icons delvarico delvarico-amphibians">clear</span> <label>Amphibians Presence</label><br>    
+                <p class="range-field range-field-amphibians"><input type="range" id="amphibians_slider" value ="1" min="1" max="10" /> <output id="amphibians_value" name="amphibians_value">1<span></span></output></p>
+              </div>
+            </form>
+            <form action="#">
+              <div class="input-field col s12">
+                <a class='btn modal-trigger' href='#modal-th_amphibians'><span class='material-icons'>info</span></a><span class="material-icons delvarico delvarico-th_amphibians">clear</span>  <label>Threatened Endemic Amphibians Presence</label><br>    
+                <p class="range-field range-field-th_amphibians"><input type="range" id="amphibians_th_slider" value ="1" min="1" max="10" /> <output id="amphibians_th_value" name="amphibians_th_value">1<span></span></output></p>
+              </div>
+            </form>
+            <form action="#">
+              <div class="input-field col s12">
+                <a class='btn modal-trigger' href='#modal-birds'><span class='material-icons'>info</span></a><span class="material-icons delvarico delvarico-birds">clear</span> <label>Birds Presence</label><br>    
+                <p class="range-field range-field-birds"><input type="range" id="birds_slider" value ="1" min="1" max="10" /> <output id="birds_value" name="birds_value">1<span></span></output></p>
+              </div>
+            </form>
+            
+
+
+            <form action="#">
+              <p>
+                <label>
+                  <input type="checkbox" class="checkbox_check" />
+                  <span>Remove areas that are already protected</span>
+                </label>
+              </p>
+            </form>
+ 
+
+              <button id="submit">Submit</button> 
+          </div>
+          </div>
+          </div>
+        </span></div>
+      </li>
+    </ul>
+          
+
+  </div>
+
+
+  <div class='calculation-box' data-html2canvas-ignore="true">
+    <ul class="collapsible popout">
+      <li class="active">
+        <div class="collapsible-header"><i class="material-icons">select_all</i>Area selected</div>
+        <div class="collapsible-body"><span><div id='polygon_out_main_area'></div></span></div>
+      </li>
+      <li>
+        <div class="collapsible-header"><i class="material-icons">bar_chart</i>Biodiversity Resources</div>
+        <div class="collapsible-body"><span><div id='polygon_out_main'></div></span></div>
+      </li>
+      <li>
+        <div class="collapsible-header"><i class="material-icons">eco</i>What makes this area special </div>
+        <div class="collapsible-body"><span><div id='polygon_out_main_2'></div></span></div>
+      </li>
+    </ul>
+
+    <!-- <div class='calculation-box_title_2'></div>
+    <div id='polygon_out_main_2'></div>
+    <div class='calculation-box_title'></div>
+    <div id='polygon_out_main'></div> -->
+
+ </div>
+
+
+
+ <a class=" tooltipped" data-position="bottom" data-tooltip="Export map" id="downloadLink" href="" download="map.png"> <span class="material-icons">get_app</span></a>
+ <div id="image"></div>
+
+
+<div class="legend">
+
+  </div>
+  <script src='app/app.js'></script>
+
+</body>
+</html>
