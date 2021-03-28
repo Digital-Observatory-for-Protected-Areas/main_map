@@ -167,7 +167,7 @@ var bounds = [
 
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/light-v10',
+    style: 'mapbox://styles/mapbox/satellite-streets-v10',
     center: [20, 20], // starting position[35.890, -75.664]
     zoom: 2.09, // starting zoom
     hash: true,
