@@ -923,7 +923,7 @@ div.mapboxgl-popup-content > i
       TEXT-ALIGN: CENTER;
   }
   .icon_custom{
-    BACKGROUND-COLOR: #ffffff;
+    BACKGROUND-COLOR: #252828;
     PADDING-TOP: 10PX!IMPORTANT;
     /* BORDER-RADIUS: 12PX; */
     padding-bottom: 5px!important;
@@ -932,9 +932,9 @@ div.mapboxgl-popup-content > i
     padding-left: 22px!important;
     padding-right: 22px!important;
     cursor: pointer;
-    color: #48535c;
+    color: #a0a8ae;
     font-size: 20px;
-    border: 1px solid #fbfbfb;
+    border: 1px solid #242727;
     font-family: 'Montserrat';
     
   }
