@@ -175,6 +175,9 @@
 <div id='main_tools' class='main_tools'>
   <div class="row">
     <div class="col s12 m6 l3 icon_custom search_icon"><a class=" tooltipped" data-position="bottom" data-tooltip="Search for places"><span class="material-icons">search</span></div>
+      <div class="col s12 m6 l3 icon_custom layers_icons pa_select"><a class=" tooltipped" data-position="bottom" data-tooltip="Protected Areas layer (January 2021 version)"><span>Protection</span></div>
+    <div class="col s12 m6 l3 icon_custom layers_icon country_select"><a class=" tooltipped" data-position="bottom" data-tooltip="Country Layer (GAUL)"><span>Country</span></div>
+    <div class="col s12 m6 l3 icon_custom layers_icons ecoregion_select"><a class=" tooltipped" data-position="bottom" data-tooltip="Trettestrial and Marine Ecoregion"><span>Ecoregion</span></div>
   </div>
 </div>
         
@@ -184,17 +187,9 @@
  
     <fieldset>
       <select id='layer_country' name='layer_country'>
-      <option value='iso3'>Select a country variable</option>
-      <option value='adm0_code'>Total Carbon</option>
-      <option value='shape_leng'>Natural Areas</option>
-      <option value='adm0_code'>Water Presence</option>
-      <option value='shape_leng'>Intact Forest</option>
-      <option value='adm0_code'>Mammals Richness</option>
-      <option value='shape_leng'>Amphibians Richness</option>
-      <option value='shape_leng'>Birds Richness</option>
-      <option value='shape_leng'>Endemic Threatened Mammals Richness</option>
-      <option value='shape_leng'>Endemic Threatened Anphibians Richness</option>
-      <option value='iso3'>Overall Score</option>
+      <option value='t_pro_per'>Terrestrial Protection</option>
+      <option value='t_conn_per'>Terrestrial Connectivity</option>
+      <option value='m_prot_per'>Marine Protection</option>
       </select>
       </fieldset>
   </div>
