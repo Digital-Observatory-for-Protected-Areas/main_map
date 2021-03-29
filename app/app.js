@@ -41,8 +41,7 @@ $(document).ready(function(){
     $( ".top_dropdown" ).hide();
     $( ".calculation-box" ).hide();
     $('.mapbox-gl-draw_trash').click();
-    map.setFilter("countries_latest", ["!in", "adm0_code", "xxx"]);
-    map.setFilter("grid_points_3", ["in", "adm0_code", "xxx"]);
+
   });
   $( ".legend_icon" ).click(function() {
     $( ".legend" ).slideToggle( "slow", function() {});
@@ -167,7 +166,7 @@ var bounds = [
 
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/satellite-streets-v10',
+    style: 'mapbox://styles/mapbox/dark-v10',
     center: [20, 20], // starting position[35.890, -75.664]
     zoom: 2.09, // starting zoom
     hash: true,
@@ -272,63 +271,313 @@ map.fire('click', { lngLat: ll, point:pointsel })
     
       }, 'waterway-label');
 
+      map.addLayer({
+        "id": "dopa_geoserver_countries_master_201905",
+        "type": "fill",
+        "source": {
+            "type": "vector",
+            "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_explorer_3:dopa_geoserver_countries_master_201905&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
+            },
+        "source-layer": "dopa_geoserver_countries_master_201905",
+  
+        'paint': {
+          'fill-color': {
+            property: 't_pro_per', // this will be your density property form you geojson
+            stops: [
+              [0, '#e44930'],
+              [1, '#f3715c'],
+              [2, '#f8981d'],
+              [5, '#f5ca71'],
+              [8, '#eed844'],
+              [12, '#b6d661'],
+              [17, '#79ac41'],
+              [30, '#196131'],
+              [50, '#064219']
+            ]
+          },
+          'fill-opacity': 0.7
+        }, 'filter': ["in", "id",'xxx'],
+  
+    }, 'waterway-label');
+
+
+    map.addLayer({
+      "id": "dopa_geoserver_ecoregions_master_201905",
+      "type": "fill",
+      "source": {
+          "type": "vector",
+          "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_explorer_3:dopa_geoserver_ecoregions_master_201905&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
+          },
+      "source-layer": "dopa_geoserver_ecoregions_master_201905",
+
+      'paint': {
+        'fill-color': {
+          property: 'protection', // this will be your density property form you geojson
+          stops: [
+            [0, '#e44930'],
+            [1, '#f3715c'],
+            [2, '#f8981d'],
+            [5, '#f5ca71'],
+            [8, '#eed844'],
+            [12, '#b6d661'],
+            [17, '#79ac41'],
+            [30, '#196131'],
+            [50, '#064219']
+          ]
+        },
+        'fill-opacity': 0.7
+      },'filter': ["in", "id",'xxx'],
+
+  }, 'waterway-label');
+
+
+
+// just to test  on the fly repaint for countries
+var layer_country = document.getElementById('layer_country');
+layer_country.addEventListener('change', function() {
+  var layer_country_value = document.getElementById('layer_country').value;
+  map.setPaintProperty('dopa_geoserver_countries_master_201905', 'fill-color', 
+  ['interpolate',['linear'],['get', layer_country_value],
+  
+  0, '#e44930',1, '#f3715c',2, '#f8981d',5, '#f5ca71',8, '#eed844',12, '#b6d661',17, '#79ac41',30, '#196131',50, '#064219',
+]);
+});
+
+$('.search_icon').click(function() {
+  map.setFilter("dopa_geoserver_countries_master_201905", ["in", "id", "xxx"]);
+  map.setFilter("dopa_geoserver_ecoregions_master_201905", ["in", "id", "xxx"]);
+  map.setFilter("dopa_geoserver_wdpa_master_202101", ["!in", "id", "xxx"]);
+  $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_legend_title'>Protected Areas</p>"+
+  "<div><span class='square_pa'style='background-color: #77bb0a'></span>Terrestrial</div>"+
+  "<div><span class='square_pa'style='background-color: #d37c10'></span>Coastal</div>"+
+  "<div><span class='square_pa'style='background-color: #13a6ec'></span>Marine</div>"+
+  "</div>");
+
+})
+
+$('.country_select').click(function() {
+  map.setFilter("dopa_geoserver_countries_master_201905", ["!in", "id", "xxx"]);
+  map.setFilter("dopa_geoserver_ecoregions_master_201905", ["in", "id", "xxx"]);
+  map.setFilter("dopa_geoserver_wdpa_master_202101", ["in", "id", "xxx"]);
+  $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_legend_title'>Country Protection</p>"+
+  "<div><span class='square_pa'style='background-color: #e44930'></span>0%</div>"+
+  "<div><span class='square_pa'style='background-color: #f3715c'></span>1%</div>"+
+  "<div><span class='square_pa'style='background-color: #f8981d'></span>2%</div>"+
+  "<div><span class='square_pa'style='background-color: #f5ca71'></span>5%</div>"+
+  "<div><span class='square_pa'style='background-color: #eed844'></span>8%</div>"+
+  "<div><span class='square_pa'style='background-color: #b6d661'></span>12%</div>"+
+  "<div><span class='square_pa'style='background-color: #79ac41'></span>17%</div>"+
+  "<div><span class='square_pa'style='background-color: #196131'></span>30%</div>"+
+  "<div><span class='square_pa'style='background-color: #064219'></span>50% or more</div>"+
+  "</div>");
+})
+
+$('.ecoregion_select').click(function() {
+  map.setFilter("dopa_geoserver_countries_master_201905", ["!in", "id", "xxx"]);
+  map.setFilter("dopa_geoserver_ecoregions_master_201905", ["in", "id", "xxx"]);
+  map.setFilter("dopa_geoserver_wdpa_master_202101", ["in", "id", "xxx"]);
+  $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_legend_title'>Ecoregion Protection</p>"+
+  "<div><span class='square_pa'style='background-color: #e44930'></span>0%</div>"+
+  "<div><span class='square_pa'style='background-color: #f3715c'></span>1%</div>"+
+  "<div><span class='square_pa'style='background-color: #f8981d'></span>2%</div>"+
+  "<div><span class='square_pa'style='background-color: #f5ca71'></span>5%</div>"+
+  "<div><span class='square_pa'style='background-color: #eed844'></span>8%</div>"+
+  "<div><span class='square_pa'style='background-color: #b6d661'></span>12%</div>"+
+  "<div><span class='square_pa'style='background-color: #79ac41'></span>17%</div>"+
+  "<div><span class='square_pa'style='background-color: #196131'></span>30%</div>"+
+  "<div><span class='square_pa'style='background-color: #064219'></span>50% or more</div>"+
+  "</div>");
+  $('#country_var_dropdown').hide();
+})
+
+$('.pa_select').click(function() {
+  map.setFilter("dopa_geoserver_countries_master_201905", ["in", "id", "xxx"]);
+  map.setFilter("dopa_geoserver_ecoregions_master_201905", ["in", "id", "xxx"]);
+  map.setFilter("dopa_geoserver_wdpa_master_202101", ["!in", "id", "xxx"]);
+  $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_legend_title'>Protected Areas</p>"+
+  "<div><span class='square_pa'style='background-color: #77bb0a'></span>Terrestrial</div>"+
+  "<div><span class='square_pa'style='background-color: #d37c10'></span>Coastal</div>"+
+  "<div><span class='square_pa'style='background-color: #13a6ec'></span>Marine</div>"+
+  "</div>");
+  $('#country_var_dropdown').hide();
+})
+
+$('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_legend_title'>Protected Areas</p>"+
+"<div><span class='square_pa'style='background-color: #77bb0a'></span>Terrestrial</div>"+
+"<div><span class='square_pa'style='background-color: #d37c10'></span>Coastal</div>"+
+"<div><span class='square_pa'style='background-color: #13a6ec'></span>Marine</div>"+
+"</div>");
+
+$('.ecoregion_select').click(function() {
+  map.setFilter("dopa_geoserver_countries_master_201905", ["in", "id", "xxx"]);
+  map.setFilter("dopa_geoserver_ecoregions_master_201905", ["!in", "id", "xxx"]);
+  map.setFilter("dopa_geoserver_wdpa_master_202101", ["in", "id", "xxx"]);
+})
+
+
+
+
 
  
-
+// PA Popup
       map.on('click', 'dopa_geoserver_wdpa_master_202101', function (e) {
         new mapboxgl.Popup()
         .setLngLat(e.lngLat)
-        .setHTML('<a href="https://dopa.gis-ninja.eu/wdpa/'+e.features[0].properties.wdpaid+'" target="_blank">'+e.features[0].properties.name+'</a><hr><br><i>IUCN Category: <b>'+e.features[0].properties.iucn_cat+'</b></i><br><i>Reported Area: <b>'+e.features[0].properties.rep_area+'</b></i><br><i>Designation: <b>'+e.features[0].properties.desig_eng+'</b></i>')
+        .setHTML('<a href="https://dopa.gis-ninja.eu/wdpa/'+e.features[0].properties.wdpaid+'" target="_blank">'+e.features[0].properties.name+'</a><br><i>IUCN Category: <b>'+e.features[0].properties.iucn_cat+'</b></i><br><i>Reported Area: <b>'+e.features[0].properties.rep_area+'</b></i><br><i>Designation: <b>'+e.features[0].properties.desig_eng+'</b></i>')
         .addTo(map);
         });
          
-        // Change the cursor to a pointer when the mouse is over the states layer.
         map.on('mouseenter', 'dopa_geoserver_wdpa_master_202101', function () {
         map.getCanvas().style.cursor = 'pointer';
         });
          
-        // Change it back to a pointer when it leaves.
         map.on('mouseleave', 'dopa_geoserver_wdpa_master_202101', function () {
         map.getCanvas().style.cursor = '';
         });
-        
+        map.on("moveend", function () {
+          var features = map.queryRenderedFeatures({ layers: ["dopa_geoserver_wdpa_master_202101"] });
+          if (features) {
+          var uniqueFeatures = getUniqueFeatures(features, "wdpaid");
+          renderListings(uniqueFeatures);
+          airports = uniqueFeatures;
+          }
+          });
+          
+          map.on("mousemove", "dopa_geoserver_wdpa_master_202101", function (e) {
+          map.getCanvas().style.cursor = "pointer";
+          popup.setLngLat(e.lngLat) .setHTML('<a href="https://dopa.gis-ninja.eu/wdpa/'+e.features[0].properties.wdpaid+'">'+e.features[0].properties.name+'</a><br><i>IUCN Category: <b>'+e.features[0].properties.iucn_cat+'</b></i><br><i>Reported Area: <b>'+e.features[0].properties.rep_area+'</b></i><br><i>Designation: <b>'+e.features[0].properties.desig_eng+'</b></i>').addTo(map);
+          });
+          
+          map.on("mouseleave", "dopa_geoserver_wdpa_master_202101", function () {
+          map.getCanvas().style.cursor = "";
+          map.getCanvas().style.cursor = "";
+          popup.remove();
+          });
+// Country Popup
+        map.on('click', 'dopa_geoserver_countries_master_201905', function (e) {
+          new mapboxgl.Popup()
+          .setLngLat(e.lngLat)
+          .setHTML('<a href="https://dopa.gis-ninja.eu/country/'+e.features[0].properties.iso2_digit+'" target="_blank">'+e.features[0].properties.name_c+'</a><br><div class = "marine_eco"></div>'+
+          " <ul><li>"+
+          "<div><span class = 'coll_item_title' > Terrestrial Protection ("+e.features[0].properties.t_pro_per.toLocaleString()+")</span>"+
+            "<div id='progressbar'><div style='width:"+e.features[0].properties.t_pro_per+"%'></div></div>"+
+            "<span class = 'coll_item_title' > Marine Protection(" +e.features[0].properties.m_prot_per.toLocaleString()+")</span>"+
+            "<div id='progressbar'><div style='width:" +e.features[0].properties.m_prot_per+"%'></div></div>"+
+            "<span class = 'coll_item_title' > Terrestrial Connectivity ("+e.features[0].properties.t_conn_per.toLocaleString()+")</span>"+
+            "<div id='progressbar'><div style='width:"+e.features[0].properties.t_conn_per+"%'></div></div>"+
+            "</div></li></ul>")
+          .addTo(map);
+          });
+          
+          map.on('mouseenter', 'dopa_geoserver_countries_master_201905', function () {
+          map.getCanvas().style.cursor = 'pointer';
+          });
+           
+          map.on('mouseleave', 'dopa_geoserver_countries_master_201905', function () {
+          map.getCanvas().style.cursor = '';
+          });
+
+          map.on("moveend", function () {
+            var features = map.queryRenderedFeatures({ layers: ["dopa_geoserver_countries_master_201905"] });
+            if (features) {
+            var uniqueFeatures = getUniqueFeatures(features, "iso2_digit");
+           
+            renderListings(uniqueFeatures);
+            country = uniqueFeatures;
+            }
+            });
+            
+            map.on("mousemove", "dopa_geoserver_countries_master_201905", function (e) {
+            map.getCanvas().style.cursor = "pointer";
+          
+            popup.setLngLat(e.lngLat)
+            .setHTML('<a href="https://dopa.gis-ninja.eu/country/'+e.features[0].properties.iso2_digit+'" target="_blank">'+e.features[0].properties.name_c+'</a><br><div class = "marine_eco"></div>'+
+            " <ul><li>"+
+            "<div><span class = 'coll_item_title' > Terrestrial Protection ("+e.features[0].properties.t_pro_per.toLocaleString()+")</span>"+
+              "<div id='progressbar'><div style='width:"+e.features[0].properties.t_pro_per+"%'></div></div>"+
+              "<span class = 'coll_item_title' > Marine Protection(" +e.features[0].properties.m_prot_per.toLocaleString()+")</span>"+
+              "<div id='progressbar'><div style='width:" +e.features[0].properties.m_prot_per+"%'></div></div>"+
+              "<span class = 'coll_item_title' > Terrestrial Connectivity ("+e.features[0].properties.t_conn_per.toLocaleString()+")</span>"+
+              "<div id='progressbar'><div style='width:"+e.features[0].properties.t_conn_per+"%'></div></div>"+
+              "</div></li></ul>")
+            .addTo(map);
+           });
+            map.on("mouseleave", "dopa_geoserver_countries_master_201905", function () {
+            map.getCanvas().style.cursor = "";
+            map.getCanvas().style.cursor = "";
+            popup.remove();
+            });
+// Ecoregion Popup
+          map.on('click', 'dopa_geoserver_ecoregions_master_201905', function (e) {
+
+            var marine = e.features[0].properties.is_marine;
+              if (marine == 'yes') {
+                 
+                marine = 'Marine Ecoregion';
+
+              }else{
+                marine = 'Terrestrial Ecoregion';
+              }
+
+
+            new mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML('<a href="https://dopa.gis-ninja.eu/ecoregion/'+e.features[0].properties.id+'" target="_blank">'+e.features[0].properties.eco_name+'</a><br><div class = "marine_eco">'+marine+'</div>'+
+            "<div><span class = 'coll_item_title' >Protection ("+e.features[0].properties.protection.toLocaleString()+")</span>"+
+            "<div id='progressbar'><div style='width:"+e.features[0].properties.protection+"%'></div></div>"+
+            "<span class = 'coll_item_title' > Terrestrial Connectivity ("+e.features[0].properties.connect.toLocaleString()+")</span>"+
+            "<div id='progressbar'><div style='width:"+e.features[0].properties.connect+"%'></div></div>"+
+            "</div></li></ul>")
+            .addTo(map);
+            });
+             
+            map.on('mouseenter', 'dopa_geoserver_ecoregions_master_201905', function () {
+            map.getCanvas().style.cursor = 'pointer';
+            });
+             
+            map.on('mouseleave', 'dopa_geoserver_ecoregions_master_201905', function () {
+            map.getCanvas().style.cursor = '';
+            });
+
+            map.on("moveend", function () {
+              var features = map.queryRenderedFeatures({ layers: ["dopa_geoserver_ecoregions_master_201905"] });
+              if (features) {
+              var uniqueFeatures = getUniqueFeatures(features, "id");
+              renderListings(uniqueFeatures);
+              airports = uniqueFeatures;
+              }
+              });
+              
+              map.on("mousemove", "dopa_geoserver_ecoregions_master_201905", function (e) {
+                var marine = e.features[0].properties.is_marine;
+                if (marine == 'yes') {
+                   
+                  marine = 'Marine Ecoregion';
+  
+                }else{
+                  marine = 'Terrestrial Ecoregion';
+                }
+              map.getCanvas().style.cursor = "pointer";
+              popup.setLngLat(e.lngLat) 
+              .setHTML('<a href="https://dopa.gis-ninja.eu/ecoregion/'+e.features[0].properties.id+'" target="_blank">'+e.features[0].properties.eco_name+'</a><br><div class = "marine_eco">'+marine+'</div>'+
+              "<div><span class = 'coll_item_title' >Protection ("+e.features[0].properties.protection.toLocaleString()+")</span>"+
+              "<div id='progressbar'><div style='width:"+e.features[0].properties.protection+"%'></div></div>"+
+              "<span class = 'coll_item_title' > Terrestrial Connectivity ("+e.features[0].properties.connect.toLocaleString()+")</span>"+
+              "<div id='progressbar'><div style='width:"+e.features[0].properties.connect+"%'></div></div>"+
+              "</div></li></ul>")
+              .addTo(map);
+              });
+              map.on("mouseleave", "dopa_geoserver_ecoregions_master_201905", function () {
+              map.getCanvas().style.cursor = "";
+              map.getCanvas().style.cursor = "";
+              popup.remove();
+              });
 
 
 
 
 
 
-
-
-
-    map.on("moveend", function () {
-    var features = map.queryRenderedFeatures({ layers: ["dopa_geoserver_wdpa_master_202101"] });
-
-    if (features) {
-      var uniqueFeatures = getUniqueFeatures(features, "wdpaid");
-      renderListings(uniqueFeatures);
-      airports = uniqueFeatures;
-    }
-  });
-
-  map.on("mousemove", "dopa_geoserver_wdpa_master_202101", function (e) {
-    // Change the cursor style as a UI indicator.
-    map.getCanvas().style.cursor = "pointer";
-
-    // Populate the popup and set its coordinates based on the feature.
-    var feature = e.features[0];
-    var wdpa_id = e.features[0].properties.wdpaid;
-    var wdpa_name = e.features[0].properties.name;
-
-
-    popup.setLngLat(e.lngLat) .setHTML('<a href="https://dopa.gis-ninja.eu/wdpa/'+e.features[0].properties.wdpaid+'">'+e.features[0].properties.name+'</a><hr><br><i>IUCN Category: <b>'+e.features[0].properties.iucn_cat+'</b></i><br><i>Reported Area: <b>'+e.features[0].properties.rep_area+'</b></i><br><i>Designation: <b>'+e.features[0].properties.desig_eng+'</b></i>').addTo(map);
-  });
-
-  map.on("mouseleave", "dopa_geoserver_wdpa_master_202101", function () {
-    map.getCanvas().style.cursor = "";
-    map.getCanvas().style.cursor = "";
-    popup.remove();
-  });
 
   
   var tilesLoaded = map.areTilesLoaded();
