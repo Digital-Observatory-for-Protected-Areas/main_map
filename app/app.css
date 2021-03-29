@@ -913,7 +913,9 @@ div.mapboxgl-popup-content > i
   border-bottom: none;
   border-top-color: #202224!IMPORTANT;
 }
-
+:focus {
+  outline: -webkit-focus-ring-color auto 0px!important;
+}
   #main_tools{
 
       POSITION: absolute;
