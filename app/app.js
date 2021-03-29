@@ -170,7 +170,7 @@ var map = new mapboxgl.Map({
     center: [20, 20], // starting position[35.890, -75.664]
     zoom: 2.09, // starting zoom
     hash: true,
-    minZoom: 1,
+    minZoom: 2.09,
     opacity: 0.5,
    
 
