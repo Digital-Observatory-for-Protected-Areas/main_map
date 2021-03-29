@@ -784,16 +784,17 @@ div.mapboxgl-popup-content > i
   }
   
   .legend {
-  background-color: #fff;
-  border-radius: 3px;
-  bottom: 30px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.10);
-  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-  padding: 10px;
-  position: absolute;
-  right: 10px;
-  z-index: 1;
-  }
+    background-color: #252828;
+    border-radius: 3px;
+    bottom: 30px;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    padding: 10px;
+    position: absolute;
+    right: 10px;
+    z-index: 1;
+    color: white;
+}
   
   .legend h4 {
   margin: 0 0 10px;
@@ -1125,15 +1126,15 @@ div.mapboxgl-popup-content > i
     margin-left: 16px;
       margin-top: 13px;
   }
-  .country_sel_legend_title{
-    font-size: 13px;
-      line-height: 15px;
-      margin-bottom: 10px;
-      padding-bottom: 10px;
-      color: #283939;
-      border-bottom: 1px solid #80808029;
-      font-weight: bold;
-  }
+  .country_sel_legend_title {
+    font-size: 20px;
+    line-height: 15px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    color: #fdfdfd;
+    border-bottom: 1px solid #80808029;
+    font-weight: bold;
+}
   #country_sel_legend > div{
     font-family: 'Montserrat', sans-serif!important;
       font-size: 11px;
