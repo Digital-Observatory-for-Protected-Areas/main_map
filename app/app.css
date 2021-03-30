@@ -71,9 +71,9 @@ div.mapboxgl-popup-content > a{
   }
 div.mapboxgl-popup-content > i
   {
-    font-size: 16px;
+    font-size: 12px;
     /* border-bottom: 1px dotted gray; */
-    padding-bottom: 2px;
+    padding-bottom: 11px!important;
     color: #94a09a;
     font-family: 'Montserrat';
   }
@@ -1111,7 +1111,21 @@ div.mapboxgl-popup-content > i
       font-size: 11px;
       margin-right: 3px;
   }
-  
+  .higlightpa{
+    font-size: 12px;
+    color: #77bb0b;
+  }
+  #pa_stats{
+  display: none;
+    overflow: hidden;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: #252828;
+    padding: 10px;
+    box-shadow: -3px 4px 12px rgb(0 0 0 / 34%);
+  }
+
   #country_name > ul > li > div.collapsible-header > i{
   
     
