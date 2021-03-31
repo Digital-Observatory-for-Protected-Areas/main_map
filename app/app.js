@@ -180,13 +180,13 @@ geocoder.on('result', function(ev) {
 });
 
         map.addLayer({
-          "id": "dopa_geoserver_wdpa_master_202101",
+          "id": "dopa_geoserver_wdpa_master_202101_o1",
           "type": "fill",
           "source": {
               "type": "vector",
-              "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_explorer_3:dopa_geoserver_wdpa_master_202101&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
+              "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_explorer_3:dopa_geoserver_wdpa_master_202101_o1&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
               },
-          "source-layer": "dopa_geoserver_wdpa_master_202101",
+          "source-layer": "dopa_geoserver_wdpa_master_202101_o1",
     
           'paint': { 
             'fill-color': [
@@ -210,9 +210,9 @@ geocoder.on('result', function(ev) {
         "type": "fill",
         "source": {
             "type": "vector",
-            "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_explorer_3:dopa_geoserver_wdpa_master_202101&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
+            "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_explorer_3:dopa_geoserver_wdpa_master_202101_o1&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
             },
-        "source-layer": "dopa_geoserver_wdpa_master_202101",
+        "source-layer": "dopa_geoserver_wdpa_master_202101_o1",
   
         'paint': { 
           'fill-color': [
@@ -236,9 +236,9 @@ geocoder.on('result', function(ev) {
       "type": "fill",
       "source": {
           "type": "vector",
-          "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_explorer_3:dopa_geoserver_wdpa_master_202101&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
+          "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_explorer_3:dopa_geoserver_wdpa_master_202101_o1&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
           },
-      "source-layer": "dopa_geoserver_wdpa_master_202101",
+      "source-layer": "dopa_geoserver_wdpa_master_202101_o1",
 
       'paint': {
         'fill-color': 'white',
@@ -353,7 +353,7 @@ layer_country.addEventListener('change', function() {
 $('.search_icon').click(function() {
   map.setFilter("dopa_geoserver_countries_master_201905", ["in", "id", "xxx"]);
   map.setFilter("dopa_geoserver_ecoregions_master_201905", ["in", "id", "xxx"]);
-  map.setFilter("dopa_geoserver_wdpa_master_202101", ["!in", "id", "xxx"]);
+  map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["!in", "id", "xxx"]);
   $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_legend_title'>Protected Areas</p>"+
   "<div><span class='square_pa'style='background-color: #77bb0a'></span>Terrestrial</div>"+
   "<div><span class='square_pa'style='background-color: #d37c10'></span>Coastal</div>"+
@@ -366,7 +366,7 @@ $('.search_icon').click(function() {
 $('.country_select').click(function() {
   map.setFilter("dopa_geoserver_countries_master_201905", ["!in", "id", "xxx"]);
   map.setFilter("dopa_geoserver_ecoregions_master_201905", ["in", "id", "xxx"]);
-  map.setFilter("dopa_geoserver_wdpa_master_202101", ["in", "id", "xxx"]);
+  map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["in", "id", "xxx"]);
   map.setFilter("country_high", ["in", "id", "xxx"]);
   map.setFilter("ecoregion_high", ["in", "id", "xxx"]);
   map.setFilter("wdpa_high", ["in", "id", "xxx"]);
@@ -388,7 +388,7 @@ $('.country_select').click(function() {
 $('.ecoregion_select').click(function() {
   map.setFilter("dopa_geoserver_countries_master_201905", ["!in", "id", "xxx"]);
   map.setFilter("dopa_geoserver_ecoregions_master_201905", ["in", "id", "xxx"]);
-  map.setFilter("dopa_geoserver_wdpa_master_202101", ["in", "id", "xxx"]);
+  map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["in", "id", "xxx"]);
   map.setFilter("country_high", ["in", "id", "xxx"]);
   map.setFilter("ecoregion_high", ["in", "id", "xxx"]);
   map.setFilter("wdpa_high", ["in", "id", "xxx"]);
@@ -412,7 +412,7 @@ $('.ecoregion_select').click(function() {
 $('.pa_select').click(function() {
   map.setFilter("dopa_geoserver_countries_master_201905", ["in", "id", "xxx"]);
   map.setFilter("dopa_geoserver_ecoregions_master_201905", ["in", "id", "xxx"]);
-  map.setFilter("dopa_geoserver_wdpa_master_202101", ["!in", "id", "xxx"]);
+  map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["!in", "id", "xxx"]);
   map.setFilter("country_high", ["in", "id", "xxx"]);
   map.setFilter("ecoregion_high", ["in", "id", "xxx"]);
   map.setFilter("wdpa_high", ["in", "id", "xxx"]);
@@ -434,13 +434,13 @@ $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_lege
 $('.ecoregion_select').click(function() {
   map.setFilter("dopa_geoserver_countries_master_201905", ["in", "id", "xxx"]);
   map.setFilter("dopa_geoserver_ecoregions_master_201905", ["!in", "id", "xxx"]);
-  map.setFilter("dopa_geoserver_wdpa_master_202101", ["in", "id", "xxx"]);
+  map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["in", "id", "xxx"]);
 })
 
 
  
 // PA Popup
-      map.on('click', 'dopa_geoserver_wdpa_master_202101', function (e) {
+      map.on('click', 'dopa_geoserver_wdpa_master_202101_o1', function (e) {
         $('#pa_stats').empty();
         $('#pa_stats').show();
         map.setFilter("wdpa_high2", ["in", "wdpaid", e.features[0].properties.wdpaid]);
@@ -1283,15 +1283,15 @@ $('.ecoregion_select').click(function() {
         .addTo(map);
         });
          
-        map.on('mouseenter', 'dopa_geoserver_wdpa_master_202101', function () {
+        map.on('mouseenter', 'dopa_geoserver_wdpa_master_202101_o1', function () {
         map.getCanvas().style.cursor = 'pointer';
         });
          
-        map.on('mouseleave', 'dopa_geoserver_wdpa_master_202101', function () {
+        map.on('mouseleave', 'dopa_geoserver_wdpa_master_202101_o1', function () {
         map.getCanvas().style.cursor = '';
         });
         map.on("moveend", function () {
-          var features = map.queryRenderedFeatures({ layers: ["dopa_geoserver_wdpa_master_202101"] });
+          var features = map.queryRenderedFeatures({ layers: ["dopa_geoserver_wdpa_master_202101_o1"] });
           if (features) {
           var uniqueFeatures = getUniqueFeatures(features, "wdpaid");
           renderListings(uniqueFeatures);
@@ -1299,7 +1299,7 @@ $('.ecoregion_select').click(function() {
           }
           });
           
-          map.on("mousemove", "dopa_geoserver_wdpa_master_202101", function (e) {
+          map.on("mousemove", "dopa_geoserver_wdpa_master_202101_o1", function (e) {
             map.setFilter("wdpa_high", ["in", "wdpaid", e.features[0].properties.wdpaid]);
           map.getCanvas().style.cursor = "pointer";
           popup.setLngLat(e.lngLat)         .setHTML('<a href="https://dopa.gis-ninja.eu/wdpa/'+e.features[0].properties.wdpaid+'" target="_blank">'+e.features[0].properties.name+
@@ -1313,7 +1313,7 @@ $('.ecoregion_select').click(function() {
         
         });
           
-          map.on("mouseleave", "dopa_geoserver_wdpa_master_202101", function () {
+          map.on("mouseleave", "dopa_geoserver_wdpa_master_202101_o1", function () {
           map.getCanvas().style.cursor = "";
           map.getCanvas().style.cursor = "";
           popup.remove();
