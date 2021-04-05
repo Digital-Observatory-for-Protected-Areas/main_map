@@ -1,4 +1,7 @@
-
+.clickedtool{
+  background-color: #7fbb41!important;
+  color: #ffffff!important;
+}
 .search_icon{
 display: none;
 }

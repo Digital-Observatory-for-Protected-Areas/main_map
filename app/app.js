@@ -1218,10 +1218,35 @@ layer_country.addEventListener('change', function() {
 
 
 $( ".live_select" ).click(function() {
-  $( ".pa_select" ).click();
+  if($('#live_layer_container').is(':visible')) {
+    $( "#live_layer_container" ).hide( "slow", function() {});
+    $('.live_select').removeClass('clickedtool');
+  }else{
+    $( "#live_layer_container" ).show( "slow", function() {});
+    $('.live_select').addClass('clickedtool');
+    $('.pa_select').removeClass('clickedtool');
+    $('.country_select').removeClass('clickedtool');
+    $('.ecoregion_select').removeClass('clickedtool');
+    map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["in", "id", "xxx"]);
+    map.setFilter("wdpa_high", ["in", "id", "xxx"]);
+    map.setFilter("wdpa_high2", ["in", "id", "xxx"]);
+  }
+  if($('.pa_select').hasClass('clickedtool')){
+    $('.pa_select').removeClass('clickedtool');
+  }else{
+  }
+  if($('.ecoregion_select').hasClass('clickedtool')){
+    $('.ecoregion_select').removeClass('clickedtool');
+  }else{
+  }
+  if($('.country_select').hasClass('clickedtool')){
+    $('.country_select').removeClass('clickedtool');
+  }else{
+  }
+ 
+  $('.legend').empty();
   $('#pa_stats').hide();
   $('#pa_title').hide();
-  $( "#live_layer_container" ).slideToggle( "slow", function() {});
   $( "#country_var_dropdown" ).hide();
   $( "#pa_stats" ).hide();
   $( "#geocoder" ).hide();
@@ -1231,16 +1256,15 @@ $( ".live_select" ).click(function() {
   $('.mapbox-gl-draw_trash').click();
   map.setFilter("country_high", ["in", "id", "xxx"]);
   map.setFilter("ecoregion_high", ["in", "id", "xxx"]);
-  map.setFilter("wdpa_high", ["in", "id", "xxx"]);
-  map.setFilter("wdpa_high2", ["in", "id", "xxx"]);
   map.setFilter("dopa_geoserver_global_dash", ["in", "id", "xxx"]);
   map.setFilter("dopa_geoserver_ecoregions_master_201905", ["in", "id", "xxx"]);
-  map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["!in", "id", "xxx"]);
 });
 
 
 
 $('.search_icon').click(function() {
+ 
+
   $('#live_var_dropdown').click();
   map.setFilter("dopa_geoserver_global_dash", ["in", "id", "xxx"]);
   map.setFilter("dopa_geoserver_ecoregions_master_201905", ["in", "id", "xxx"]);
@@ -1259,70 +1283,152 @@ $('.search_icon').click(function() {
 
 
 
+
+
+
+
 $('.country_select').click(function() {
-  $('#pa_title').hide();
+  if($('.country_select').hasClass('clickedtool')){
+    $('.country_select').removeClass('clickedtool');
+    map.setFilter("dopa_geoserver_ecoregions_master_201905", ["in", "id", "xxx"]);
+    map.setFilter("dopa_geoserver_global_dash", ["in", "id", "xxx"]);
+    map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["in", "id", "xxx"]);
+    map.setFilter("country_high", ["in", "id", "xxx"]);
+    map.setFilter("ecoregion_high", ["in", "id", "xxx"]);
+    map.setFilter("wdpa_high", ["in", "id", "xxx"]);
+    map.setFilter("wdpa_high2", ["in", "id", "xxx"]);
+    $('#pa_title').hide();
+    $('#geocoder').show();
+    $('#pa_stats').hide();
+    $('#live_layer_container').hide();
+    $(".select-dropdown").val("Select a layer");
+    $('.legend').empty();
+  }else{
+    $('.country_select').addClass('clickedtool');
+    map.setFilter("dopa_geoserver_ecoregions_master_201905", ["in", "id", "xxx"]);
+    map.setFilter("dopa_geoserver_global_dash", ["!in", "id", "xxx"]);
+    map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["in", "id", "xxx"]);
+    map.setFilter("country_high", ["in", "id", "xxx"]);
+    map.setFilter("ecoregion_high", ["in", "id", "xxx"]);
+    map.setFilter("wdpa_high", ["in", "id", "xxx"]);
+    map.setFilter("wdpa_high2", ["in", "id", "xxx"]);
+    map.setPaintProperty('dopa_geoserver_global_dash', 'fill-color', 
+    ['interpolate',['linear'],['get', 'prot_perc_ind'],
+    0, '#c51b7d',1, '#de77ae',2, '#f1b6da',5, '#fde0ef',8, '#f7f7f7',12, '#e6f5d0',17, '#b8e186',30, '#7fbc41',50, '#4d9221',
+  ]);
+    $('#pa_title').hide();
+    $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_legend_title'>Overall Protection</p>"+
+    "<div><span class='square_pa'style='background-color: #c51b7d'></span>0%</div>"+
+    "<div><span class='square_pa'style='background-color: #de77ae'></span>1%</div>"+
+    "<div><span class='square_pa'style='background-color: #f1b6da'></span>2%</div>"+
+    "<div><span class='square_pa'style='background-color: #fde0ef'></span>5%</div>"+
+    "<div><span class='square_pa'style='background-color: #f7f7f7'></span>8%</div>"+
+    "<div><span class='square_pa'style='background-color: #e6f5d0'></span>12%</div>"+
+    "<div><span class='square_pa'style='background-color: #b8e186'></span>17%</div>"+
+    "<div><span class='square_pa'style='background-color: #7fbc41'></span>30%</div>"+
+    "<div><span class='square_pa'style='background-color: #4d9221'></span>50% or more</div>"+
+    "</div>");
+    $('#pa_title').hide();
   $('#geocoder').show();
   $('#pa_stats').hide();
   $('#live_layer_container').hide();
   $(".select-dropdown").val("Select a layer");
-  map.setPaintProperty('dopa_geoserver_global_dash', 'fill-color', 
-  ['interpolate',['linear'],['get', 'prot_perc_ind'],
-  0, '#c51b7d',1, '#de77ae',2, '#f1b6da',5, '#fde0ef',8, '#f7f7f7',12, '#e6f5d0',17, '#b8e186',30, '#7fbc41',50, '#4d9221',
-]);
-  map.setFilter("dopa_geoserver_global_dash", ["!in", "id", "xxx"]);
-  map.setFilter("dopa_geoserver_ecoregions_master_201905", ["in", "id", "xxx"]);
-  map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["in", "id", "xxx"]);
-  map.setFilter("country_high", ["in", "id", "xxx"]);
-  map.setFilter("ecoregion_high", ["in", "id", "xxx"]);
-  map.setFilter("wdpa_high", ["in", "id", "xxx"]);
-  map.setFilter("wdpa_high2", ["in", "id", "xxx"]);
-  $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_legend_title'>Overall Protection</p>"+
-  "<div><span class='square_pa'style='background-color: #c51b7d'></span>0%</div>"+
-  "<div><span class='square_pa'style='background-color: #de77ae'></span>1%</div>"+
-  "<div><span class='square_pa'style='background-color: #f1b6da'></span>2%</div>"+
-  "<div><span class='square_pa'style='background-color: #fde0ef'></span>5%</div>"+
-  "<div><span class='square_pa'style='background-color: #f7f7f7'></span>8%</div>"+
-  "<div><span class='square_pa'style='background-color: #e6f5d0'></span>12%</div>"+
-  "<div><span class='square_pa'style='background-color: #b8e186'></span>17%</div>"+
-  "<div><span class='square_pa'style='background-color: #7fbc41'></span>30%</div>"+
-  "<div><span class='square_pa'style='background-color: #4d9221'></span>50% or more</div>"+
-  "</div>");
+  }
+  if($('.pa_select').hasClass('clickedtool')){
+    $('.pa_select').removeClass('clickedtool');
+  }else{
+  }
+  if($('.ecoregion_select').hasClass('clickedtool')){
+    $('.ecoregion_select').removeClass('clickedtool');
+  }else{
+  }
+  if($('.live_select').hasClass('clickedtool')){
+    $('.live_select').removeClass('clickedtool');
+  }else{
+  }
 
 })
+
 
 $('.ecoregion_select').click(function() {
-  $('#live_layer_container').hide();
-  $('#pa_title').hide();
-  map.setFilter("dopa_geoserver_global_dash", ["!in", "id", "xxx"]);
-  map.setFilter("dopa_geoserver_ecoregions_master_201905", ["in", "id", "xxx"]);
-  map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["in", "id", "xxx"]);
-  map.setFilter("country_high", ["in", "id", "xxx"]);
-  map.setFilter("ecoregion_high", ["in", "id", "xxx"]);
-  map.setFilter("wdpa_high", ["in", "id", "xxx"]);
-  map.setFilter("wdpa_high2", ["in", "id", "xxx"]);
-  $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_legend_title'>Ecoregion Protection</p>"+
-  "<div><span class='square_pa'style='background-color: #c51b7d'></span>0%</div>"+
-  "<div><span class='square_pa'style='background-color: #de77ae'></span>1%</div>"+
-  "<div><span class='square_pa'style='background-color: #f1b6da'></span>2%</div>"+
-  "<div><span class='square_pa'style='background-color: #fde0ef'></span>5%</div>"+
-  "<div><span class='square_pa'style='background-color: #f7f7f7'></span>8%</div>"+
-  "<div><span class='square_pa'style='background-color: #e6f5d0'></span>12%</div>"+
-  "<div><span class='square_pa'style='background-color: #b8e186'></span>17%</div>"+
-  "<div><span class='square_pa'style='background-color: #7fbc41'></span>30%</div>"+
-  "<div><span class='square_pa'style='background-color: #4d9221'></span>50% or more</div>"+
-  "</div>");
-  $('#country_var_dropdown').hide();
-  $('#pa_stats').hide();
-  
+  if($('.ecoregion_select').hasClass('clickedtool')){
+    $('.ecoregion_select').removeClass('clickedtool');
+    map.setFilter("dopa_geoserver_ecoregions_master_201905", ["in", "id", "xxx"]);
+    map.setFilter("dopa_geoserver_global_dash", ["in", "id", "xxx"]);
+    map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["in", "id", "xxx"]);
+    map.setFilter("country_high", ["in", "id", "xxx"]);
+    map.setFilter("ecoregion_high", ["in", "id", "xxx"]);
+    map.setFilter("wdpa_high", ["in", "id", "xxx"]);
+    map.setFilter("wdpa_high2", ["in", "id", "xxx"]);
+    $('#pa_title').hide();
+    $('#country_var_dropdown').hide();
+    $('#pa_stats').hide();
+    $('.legend').empty();
+  }else{
+    $('.ecoregion_select').addClass('clickedtool');
+    map.setFilter("dopa_geoserver_ecoregions_master_201905", ["!in", "id", "xxx"]);
+    map.setFilter("dopa_geoserver_global_dash", ["in", "id", "xxx"]);
+    map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["in", "id", "xxx"]);
+    map.setFilter("country_high", ["in", "id", "xxx"]);
+    map.setFilter("ecoregion_high", ["in", "id", "xxx"]);
+    map.setFilter("wdpa_high", ["in", "id", "xxx"]);
+    map.setFilter("wdpa_high2", ["in", "id", "xxx"]);
+    $('#pa_title').hide();
+    $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_legend_title'>Ecoregion Protection</p>"+
+    "<div><span class='square_pa'style='background-color: #c51b7d'></span>0%</div>"+
+    "<div><span class='square_pa'style='background-color: #de77ae'></span>1%</div>"+
+    "<div><span class='square_pa'style='background-color: #f1b6da'></span>2%</div>"+
+    "<div><span class='square_pa'style='background-color: #fde0ef'></span>5%</div>"+
+    "<div><span class='square_pa'style='background-color: #f7f7f7'></span>8%</div>"+
+    "<div><span class='square_pa'style='background-color: #e6f5d0'></span>12%</div>"+
+    "<div><span class='square_pa'style='background-color: #b8e186'></span>17%</div>"+
+    "<div><span class='square_pa'style='background-color: #7fbc41'></span>30%</div>"+
+    "<div><span class='square_pa'style='background-color: #4d9221'></span>50% or more</div>"+
+    "</div>");
+    $('#country_var_dropdown').hide();
+    $('#pa_stats').hide();
+    $('#live_layer_container').hide();
+  }
+  if($('.pa_select').hasClass('clickedtool')){
+    $('.pa_select').removeClass('clickedtool');
+  }else{
+  }
+  if($('.country_select').hasClass('clickedtool')){
+    $('.country_select').removeClass('clickedtool');
+  }else{
+  }
+  if($('.live_select').hasClass('clickedtool')){
+    $('.live_select').removeClass('clickedtool');
+  }else{
+  }
+
 })
 
+$('.pa_select').toggleClass("clickedtool");
 $('.pa_select').click(function() {
+  if($('.pa_select').hasClass('clickedtool')){
+    $('.pa_select').removeClass('clickedtool');
+    map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["in", "id", "xxx"]);
+  }else{
+    map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["!in", "id", "xxx"]);
+    $('.pa_select').addClass('clickedtool');
+  }
+
+  if($('.country_select').hasClass('clickedtool')){
+    $('.country_select').removeClass('clickedtool');
+  }else{
+  }
+  if($('.ecoregion_select').hasClass('clickedtool')){
+    $('.ecoregion_select').removeClass('clickedtool');
+  }else{
+
+  }
+
   $('#pa_stats').hide();
   $('#live_var_dropdown').click();
   $('#live_var_dropdown').hide();
   map.setFilter("dopa_geoserver_global_dash", ["in", "id", "xxx"]);
   map.setFilter("dopa_geoserver_ecoregions_master_201905", ["in", "id", "xxx"]);
-  map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["!in", "id", "xxx"]);
   map.setFilter("country_high", ["in", "id", "xxx"]);
   map.setFilter("ecoregion_high", ["in", "id", "xxx"]);
   map.setFilter("wdpa_high", ["in", "id", "xxx"]);
@@ -1341,16 +1447,12 @@ $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_lege
 "<div><span class='square_pa'style='background-color: #13a6ec'></span>Marine</div>"+
 "</div>");
 
-$('.ecoregion_select').click(function() {
-  map.setFilter("dopa_geoserver_global_dash", ["in", "id", "xxx"]);
-  map.setFilter("dopa_geoserver_ecoregions_master_201905", ["!in", "id", "xxx"]);
-  map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["in", "id", "xxx"]);
-})
 
 
  
 // PA Popup
       map.on('click', 'dopa_geoserver_wdpa_master_202101_o1', function (e) {
+
         if($('#live_layer_container').is(':visible')) {
           $('#pa_stats').addClass("relPosition");
           $('#pa_title').addClass("relPosition_t");
@@ -1361,6 +1463,7 @@ $('.ecoregion_select').click(function() {
         $('#pa_title').removeClass("relPosition_t");
         $('#geocoder').show();
       }
+      
       $('#pa_stats').empty().prepend('<img id="theImg" src="img/load_.gif" />')
         
         $('#pa_stats').show();
