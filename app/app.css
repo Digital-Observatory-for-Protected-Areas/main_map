@@ -230,7 +230,7 @@ display: none;
     position: absolute!important;
     /* box-shadow: none!important; */
     left: 426px!important;
-    top: 131px!important;
+    top: 72px!important;
   }
 .live_title{
   font-family: 'Montserrat';
@@ -1151,6 +1151,10 @@ div.mapboxgl-popup-content > i
   font-weight: bold;
   margin: 0 0 5px;
   }
+  #pa_titles{
+    color: white;
+    text-align: center;
+  }
   
   .input-field {
       position: relative;
@@ -1168,7 +1172,7 @@ div.mapboxgl-popup-content > i
   .mapboxgl-ctrl-geocoder { min-width:100%; }
   #country_var_dropdown{
     display: none;
-    top: 134px;
+    top: 72px;
     position: absolute;
     margin-left: 27px;
     background-color: #252828;
@@ -1470,13 +1474,14 @@ div.mapboxgl-popup-content > i
     display: none;
     position: absolute;
     left: 27px;
-    top: 195px;
+    top: 133px;
     background-color: #252828;
     padding: 10px;
     box-shadow: -3px 4px 12px rgb(0 0 0 / 34%);
     overflow: auto!important;
     max-height: 60%;
     width: 387px;
+    min-height: 384px;
   }
   #numind{
     color: #5dac27;

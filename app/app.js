@@ -151,8 +151,8 @@ var bounds = [
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/dark-v10',
-    center: [3, -10], // starting position[35.890, -75.664]
-    zoom: 2.72, // starting zoom
+    center: [15, 22], // starting position[35.890, -75.664]
+    zoom: 2.09, // starting zoom
     hash: true,
     minZoom: 2.09,
     opacity: 0.5,
@@ -174,7 +174,7 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 map.on('load', function() {
 
   var busy_tabs ={ spinner: "pulsar",color:'#67aa26',background:'#000000ab'};
- $("#map").busyLoad("show", busy_tabs);
+// $("#map").busyLoad("show", busy_tabs);
 
  map.addSource('single-point', {
   "type": "geojson",
@@ -724,7 +724,7 @@ if (classname=='news'){
               /* other */ '#ccc'
               ],
               'fill-opacity': 0.5
-              }
+              },  'filter': ["in", "wdpaid",'xxx']
     
       }, 'waterway-label');
 
@@ -796,7 +796,7 @@ if (classname=='news'){
             ]
           },
           'fill-opacity': 0.8
-        }, 'filter': ["in", "id",'xxx'],
+        }
   
     }, 'waterway-label');
 
@@ -1298,7 +1298,6 @@ $('.country_select').click(function() {
     map.setFilter("wdpa_high", ["in", "id", "xxx"]);
     map.setFilter("wdpa_high2", ["in", "id", "xxx"]);
     $('#pa_title').hide();
-    $('#geocoder').show();
     $('#pa_stats').hide();
     $('#live_layer_container').hide();
     $(".select-dropdown").val("Select a layer");
@@ -1329,7 +1328,6 @@ $('.country_select').click(function() {
     "<div><span class='square_pa'style='background-color: #4d9221'></span>50% or more</div>"+
     "</div>");
     $('#pa_title').hide();
-  $('#geocoder').show();
   $('#pa_stats').hide();
   $('#live_layer_container').hide();
   $(".select-dropdown").val("Select a layer");
@@ -1404,8 +1402,9 @@ $('.ecoregion_select').click(function() {
 
 })
 
-$('.pa_select').toggleClass("clickedtool");
+
 $('.pa_select').click(function() {
+  $('#geocoder').show();
   if($('.pa_select').hasClass('clickedtool')){
     $('.pa_select').removeClass('clickedtool');
     map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["in", "id", "xxx"]);
@@ -1441,17 +1440,25 @@ $('.pa_select').click(function() {
   $('#country_var_dropdown').hide();
 })
 
-$('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_legend_title'>Protected Areas</p>"+
-"<div><span class='square_pa'style='background-color: #7fbc41'></span>Terrestrial</div>"+
-"<div><span class='square_pa'style='background-color: #b9cda5'></span>Coastal</div>"+
-"<div><span class='square_pa'style='background-color: #13a6ec'></span>Marine</div>"+
+$('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_legend_title'>Overall Protection</p>"+
+"<div><span class='square_pa'style='background-color: #c51b7d'></span>0%</div>"+
+"<div><span class='square_pa'style='background-color: #de77ae'></span>1%</div>"+
+"<div><span class='square_pa'style='background-color: #f1b6da'></span>2%</div>"+
+"<div><span class='square_pa'style='background-color: #fde0ef'></span>5%</div>"+
+"<div><span class='square_pa'style='background-color: #f7f7f7'></span>8%</div>"+
+"<div><span class='square_pa'style='background-color: #e6f5d0'></span>12%</div>"+
+"<div><span class='square_pa'style='background-color: #b8e186'></span>17%</div>"+
+"<div><span class='square_pa'style='background-color: #7fbc41'></span>30%</div>"+
+"<div><span class='square_pa'style='background-color: #4d9221'></span>50% or more</div>"+
 "</div>");
-
 
 
  
 // PA Popup
       map.on('click', 'dopa_geoserver_wdpa_master_202101_o1', function (e) {
+     
+    
+
 
         if($('#live_layer_container').is(':visible')) {
           $('#pa_stats').addClass("relPosition");
@@ -1464,11 +1471,16 @@ $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_lege
         $('#geocoder').show();
       }
       
-      $('#pa_stats').empty().prepend('<img id="theImg" src="img/load_.gif" />')
-        
+      $('#pa_stats').empty().prepend('<img id="theImg" src="img/load_.gif" />').append('<div id="pa_titles">Calculating statistics for <br><b>'+e.features[0].properties.name+'</b></div>')
+      .append('<div id="pa_stat"></div>');
+      if($('#country_var_dropdown').is(':visible')) {
+        $('#geocoder').hide();
+     }else{
+      $('#geocoder').show();
+     }  
+
         $('#pa_stats').show();
-        $('#pa_title').show();
-        $('#pa_title').html(e.features[0].properties.name);
+
         map.setFilter("wdpa_high2", ["in", "wdpaid", e.features[0].properties.wdpaid]);
         var marine = e.features[0].properties.marine;
         var prod_base_url_services = 'https://dopa-services.jrc.ec.europa.eu/services/d6dopa40'
@@ -2290,10 +2302,7 @@ $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_lege
                 }
               });
         }
-
-
-
-
+    
 
 
 
@@ -2346,7 +2355,25 @@ $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_lege
           });
 // Country Popup
         map.on('click', 'dopa_geoserver_global_dash', function (e) {
-          $('#geocoder').show();
+
+          map.setFilter("dopa_geoserver_wdpa_master_202101_o1", ["in", "iso3", e.features[0].properties.iso3_digit]);
+
+          map.setFilter("dopa_geoserver_global_dash", ["!in", "iso2_digit", e.features[0].properties.iso2_digit]);
+
+          $('#country_var_dropdown').show();
+
+          if($('#prot_legend').length == 0) {
+             $('.legend').append("<br><div id='prot_legend'> <p class='country_sel_legend_title'>Protected Areas</p>"+
+            "<div><span class='square_pa'style='background-color: #7fbc41'></span>Terrestrial</div>"+
+            "<div><span class='square_pa'style='background-color: #b9cda5'></span>Coastal</div>"+
+            "<div><span class='square_pa'style='background-color: #13a6ec'></span>Marine</div>"+
+            "</div>");
+          }else{
+
+          }
+
+ 
+
           if($('#live_layer_container').is(':visible')) {
             $('#pa_stats').addClass("relPosition");
             $('#country_var_dropdown').addClass("relPosition");
@@ -2368,6 +2395,39 @@ $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_lege
             prot_mar_perc_rank = prot_mar_perc_rank
           }
           $('#pa_stats').show();
+
+
+
+        
+             var country_stats_rest = "https://geospatial.jrc.ec.europa.eu/geoserver/wfs?request=getfeature&version=1.0.0&service=wfs&typename=dopa_explorer_3:dopa_geoserver_global_dash&propertyname=name_c,iso3_digit,iso2_digit,&SORTBY=iso2_digit&CQL_FILTER=iso2_digit='"+e.features[0].properties.iso2_digit+"'&outputFormat=application%2Fjson";
+             console.log(country_stats_rest);
+             $.ajax({
+                 url: country_stats_rest,
+                 dataType: 'json',
+                 success: function(d) {
+                    
+                         var bbox = [];
+                         console.log(d.features[0].properties.bbox[0]);
+                         
+                         var x1 = d.features[0].properties.bbox[0];
+                         var x2 = d.features[0].properties.bbox[1];
+                         var x3 = d.features[0].properties.bbox[2];
+                         var x4 = d.features[0].properties.bbox[3];
+                        
+                         
+                         map.fitBounds([
+                            [x3,x4],
+                            [x1,x2]
+                          ])
+        
+ 
+                       
+                   },
+               });
+         
+             
+
+
           $('#pa_stats').html(
           "<div>"+
           "<div id='c_title'><a href='https://dopa.gis-ninja.eu/country/"+e.features[0].properties.iso2_digit+"' target='_blank'>"+e.features[0].properties.name_c+"</a><br><br></div>"+
