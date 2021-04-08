@@ -2342,7 +2342,7 @@ $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_lege
           '</b></i><br><i>Status <b class = "higlightpa">'+e.features[0].properties.status+
           '</b></i><br><i>Status Year <b class = "higlightpa">'+e.features[0].properties.status_yr+
           '</b></i><br><i>IUCN Category <b class = "higlightpa">'+e.features[0].properties.iucn_cat+
-          '</b></i><br><i>Reported Area <b class = "higlightpa">'+e.features[0].properties.rep_area+ ' km<sup>2</sup>'+
+          '</b></i><br><i>Reported Area <b class = "higlightpa">'+(e.features[0].properties.rep_area).toLocaleString()+ ' km<sup>2</sup>'+
           '</b></i><br><i>Designation <b class = "higlightpa"> '+e.features[0].properties.desig_eng+'</b></i>')
           .addTo(map);
         
@@ -2462,11 +2462,6 @@ $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_lege
           "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
           "<div id='progressbar'><div style='width:"+e.features[0].properties.forest_loss_perc_ind+"%'></div></div>"+
 
-          "<span class = 'coll_item_title' > Land Degradation ("+e.features[0].properties.land_degradation_ind+"% Rank: "+e.features[0].properties.land_degradation_rank+" )</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
-          "<div id='progressbar'><div style='width:"+e.features[0].properties.land_degradation_ind+"%'></div></div>"+
-          // Ecosystem Services
-          "<div id='p_title'>Ecosystem Services</div>"+
           "<span class = 'coll_item_title' > Natural Areas ("+e.features[0].properties.land_natural_perc_ind.toLocaleString()+"% Rank: "+e.features[0].properties.land_natural_perc_rank+")</span>"+
           "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
           "<div id='progressbar'><div style='width:"+e.features[0].properties.land_natural_perc_ind+"%'></div></div>"+
@@ -2474,6 +2469,12 @@ $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_lege
           "<span class = 'coll_item_title' > Net change of Permanent Surface Water (Rank: "+e.features[0].properties.water_p_netchange_perc_rank+")</span>"+
           "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
           "<div id='numind'>"+e.features[0].properties.water_p_netchange_perc_rank.toLocaleString()+"%</div></div>"+
+
+          "<span class = 'coll_item_title' > Land Degradation ("+e.features[0].properties.land_degradation_ind+"% Rank: "+e.features[0].properties.land_degradation_rank+" )</span>"+
+          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<div id='progressbar'><div style='width:"+e.features[0].properties.land_degradation_ind+"%'></div></div>"+
+          // Ecosystem Services
+          "<div id='p_title'>Ecosystem Services</div>"+
 
           "<span class = 'coll_item_title' > Total Carbon (Rank: "+e.features[0].properties.tot_carbon_rank+")</span>"+
           "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
@@ -2539,7 +2540,7 @@ $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_lege
             map.on("mousemove", "dopa_geoserver_global_dash", function (e) {
             map.getCanvas().style.cursor = "pointer";
             map.setFilter("country_high", ["in", "iso2_digit", e.features[0].properties.iso2_digit]);
-            var prot_mar_perc_ind = e.features[0].properties.prot_mar_perc_in;
+            var prot_mar_perc_ind = e.features[0].properties.prot_mar_perc_ind;
             if (prot_mar_perc_ind == null){
               prot_mar_perc_ind = 0
             } else{
@@ -2548,9 +2549,7 @@ $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_lege
             popup.setLngLat(e.lngLat)
             .setHTML('<a href="https://dopa.gis-ninja.eu/country/'+e.features[0].properties.iso2_digit+'" target="_blank">'+e.features[0].properties.name_c+'</a><br><div class = "marine_eco"></div>'+
             " <ul><li>"+
-            "<div><span class = 'coll_item_title' > Overall Protection ("+e.features[0].properties.prot_perc_ind.toLocaleString()+")</span>"+
-              "<div id='progressbar'><div style='width:"+e.features[0].properties.prot_perc_ind+"%'></div></div>"+
-              "<span class = 'coll_item_title' > Terrestrial Protection ("+e.features[0].properties.prot_terr_perc_ind.toLocaleString()+")</span>"+
+            "<div><span class = 'coll_item_title' > Terrestrial Protection ("+e.features[0].properties.prot_terr_perc_ind.toLocaleString()+")</span>"+
               "<div id='progressbar'><div style='width:"+e.features[0].properties.prot_terr_perc_ind+"%'></div></div>"+
               "<span class = 'coll_item_title' > Marine Protection(" +prot_mar_perc_ind.toLocaleString()+")</span>"+
               "<div id='progressbar'><div style='width:" +prot_mar_perc_ind+"%'></div></div>"+
