@@ -2437,83 +2437,83 @@ $('.legend').html("<br><div id='country_prot_legend'> <p class='country_sel_lege
           "<div id='progressbar'><div style='width:"+e.features[0].properties.prot_perc_ind+"%'></div></div>"+
 
           "<span class = 'coll_item_title' > Terrestrial Protection ("+e.features[0].properties.prot_terr_perc_ind.toLocaleString()+"% Rank: "+e.features[0].properties.prot_terr_perc_rank+")</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-terrestrial_protection'><span class='material-icons'>info</span></a>"+
           "<div id='progressbar'><div style='width:"+e.features[0].properties.prot_terr_perc_ind+"%'></div></div>"+
 
           "<span class = 'coll_item_title' > Marine Protection(" +prot_mar_perc_ind.toLocaleString()+"% Rank: "+prot_mar_perc_rank+")</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-marine_protection'><span class='material-icons'>info</span></a>"+
           "<div id='progressbar'><div style='width:"+prot_mar_perc_ind+"%'></div></div>"+
 
           "<span class = 'coll_item_title' > Terrestrial Connectivity ("+e.features[0].properties.protconn_ind.toLocaleString()+"% Rank: "+e.features[0].properties.protconn_rank+")</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-connectivity'><span class='material-icons'>info</span></a>"+
           "<div id='progressbar'><div style='width:"+e.features[0].properties.protconn_ind+"%'></div></div>"+
 
           // Ecosystem Indicators
           "<div id='p_title'>Ecosystems</div>"+
           "<span class = 'coll_item_title' > Forest Cover ("+e.features[0].properties.forest_perc_ind+"% Rank: "+e.features[0].properties.forest_perc_rank+")</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-forest'><span class='material-icons'>info</span></a>"+
           "<div id='progressbar'><div style='width:"+e.features[0].properties.forest_perc_ind+"%'></div></div>"+
         
           "<span class = 'coll_item_title' > Forest Gain ("+e.features[0].properties.forest_gain_perc_ind+"% Rank: "+e.features[0].properties.forest_gain_perc_rank+")</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-forest_gain'><span class='material-icons'>info</span></a>"+
           "<div id='progressbar'><div style='width:"+e.features[0].properties.forest_gain_perc_ind+"%'></div></div>"+
           
           "<span class = 'coll_item_title' > Forest Loss ("+e.features[0].properties.forest_loss_perc_ind+"% Rank: "+e.features[0].properties.forest_loss_perc_rank+")</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-forest_loss'><span class='material-icons'>info</span></a>"+
           "<div id='progressbar'><div style='width:"+e.features[0].properties.forest_loss_perc_ind+"%'></div></div>"+
 
           "<span class = 'coll_item_title' > Natural Areas ("+e.features[0].properties.land_natural_perc_ind.toLocaleString()+"% Rank: "+e.features[0].properties.land_natural_perc_rank+")</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-natural'><span class='material-icons'>info</span></a>"+
           "<div id='progressbar'><div style='width:"+e.features[0].properties.land_natural_perc_ind+"%'></div></div>"+
 
           "<span class = 'coll_item_title' > Net change of Permanent Surface Water (Rank: "+e.features[0].properties.water_p_netchange_perc_rank+")</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-water'><span class='material-icons'>info</span></a>"+
           "<div id='numind'>"+e.features[0].properties.water_p_netchange_perc_rank.toLocaleString()+"%</div></div>"+
 
           "<span class = 'coll_item_title' > Land Degradation ("+e.features[0].properties.land_degradation_ind+"% Rank: "+e.features[0].properties.land_degradation_rank+" )</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-land_degradation'><span class='material-icons'>info</span></a>"+
           "<div id='progressbar'><div style='width:"+e.features[0].properties.land_degradation_ind+"%'></div></div>"+
           // Ecosystem Services
           "<div id='p_title'>Ecosystem Services</div>"+
 
           "<span class = 'coll_item_title' > Total Carbon (Rank: "+e.features[0].properties.tot_carbon_rank+")</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-carbon'><span class='material-icons'>info</span></a>"+
           "<div id='numind'>"+e.features[0].properties.tot_carbon_ind.toLocaleString()+"Pg</div></div>"+
 
           // Species Indicators
           "<div id='p_title'>Species</div>"+
           "<span class = 'coll_item_title' > Number of Species (Rank: "+e.features[0].properties.tot_species_rank+")</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-species'><span class='material-icons'>info</span></a>"+
           "<div id='numind'>"+e.features[0].properties.tot_species_ind+"</div></div>"+
 
           "<span class = 'coll_item_title' > Number of Endemic Species (Rank: "+e.features[0].properties.species_endem_rank+")</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-endemic_species'><span class='material-icons'>info</span></a>"+
           "<div id='numind'>"+e.features[0].properties.species_endem_ind+"</div></div>"+
 
           "<span class = 'coll_item_title' > Number of Threatened Species(Rank: "+e.features[0].properties.threat_species_rank+")</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-th_species'><span class='material-icons'>info</span></a>"+
           "<div id='numind'>"+e.features[0].properties.threat_species_ind+"</div></div>"+
 
           "<span class = 'coll_item_title' > Number of Threatened Endemic Species ( Rank:"+e.features[0].properties.species_endem_threat_rank+")</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-th_endemic_species'><span class='material-icons'>info</span></a>"+
           "<div id='numind'>"+e.features[0].properties.species_endem_threat_ind+"</div></div>"+
 
            // Pressure Indicators
           "<div id='p_title'>Human Dynamics</div>"+
           "<span class = 'coll_item_title' > Total Population ("+e.features[0].properties.tot_pop_ind.toLocaleString()+" Rank: "+e.features[0].properties.tot_pop_rank+")</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-population'><span class='material-icons'>info</span></a>"+
           "<div id='numind'>"+e.features[0].properties.tot_pop_ind.toLocaleString()+"</div></div>"+
 
           "<span class = 'coll_item_title' > Population Density (Rank: "+e.features[0].properties.dens_pop_rank+")</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-pop_dens'><span class='material-icons'>info</span></a>"+
           "<div id='numind'>"+e.features[0].properties.dens_pop_ind.toLocaleString()+"</div></div>"+
 
           "<span class = 'coll_item_title' > Population Growth (Rank: "+e.features[0].properties.growth_pop_rank+")</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-pop_growth'><span class='material-icons'>info</span></a>"+
           "<div id='numind'>"+e.features[0].properties.growth_pop_ind.toLocaleString()+"</div></div>"+
 
           "<span class = 'coll_item_title' > Agricultural Areas ("+e.features[0].properties.agri_area_ind.toLocaleString()+"% Rank: "+e.features[0].properties.agri_area_rank+")</span>"+
-          "<a class='btn modal-trigger' href='#modal-overall_protection'><span class='material-icons'>info</span></a>"+
+          "<a class='btn modal-trigger' href='#modal-agri'><span class='material-icons'>info</span></a>"+
           "<div id='progressbar'><div style='width:"+e.features[0].properties.agri_area_ind+"%'></div></div>"+
 
           "</div></li></ul>");
